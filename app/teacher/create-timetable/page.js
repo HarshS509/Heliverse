@@ -94,12 +94,12 @@ const TimetableForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission logic here
-    console.log("Timetable submitted:", timetable);
+    // console.log("Timetable submitted:", timetable);
   };
 
   return (
     <div className="container flex mx-auto min-h-screen p-4 w-full bg-white border border-gray-300 rounded-lg shadow-lg">
-      <div className="container mx-auto p-6 max-w-4xl bg-white border border-gray-300 rounded-lg shadow-lg">
+      <div className="container mx-auto p-6 w-full max-w-4xl bg-white border border-gray-300 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">
           Weekly Timetable
         </h1>

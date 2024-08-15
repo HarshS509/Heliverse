@@ -12,17 +12,17 @@ const cookieString = cookieStore
   .join("; ");
 export async function loginUser(prevState, formData) {
   const uri = "http://13.49.35.186";
-  console.log("hi");
+  // console.log("hi");
   const email = formData.get("email");
   const password = formData.get("password");
   const role = formData.get("role");
-  console.log(email, password, role, "hereee");
+  // console.log(email, password, role, "hereee");
   const bodyObject = {
     email,
     password,
     role,
   };
-  console.log(bodyObject, "DATAAAA");
+  // console.log(bodyObject, "DATAAAA");
   const errors = {
     email: !email ? "Username or email is required" : null,
     password:
@@ -61,9 +61,9 @@ export async function loginUser(prevState, formData) {
 
     // Parse JSON response
     const data = await response.json();
-    console.log("Success:", data); // Handle success
+    // console.log("Success:", data); // Handle success
 
-    console.log(data);
+    // console.log(data);
     revalidatePath("/");
     // console.log(data);
     return {
@@ -88,9 +88,9 @@ export async function loginUser(prevState, formData) {
 }
 
 export async function addClassRoom(prevState, formData) {
-  console.log("hiii", Date.now());
+  // console.log("hiii", Date.now());
   const name = formData.get("name");
-  console.log("name", name);
+  // console.log("name", name);
   const weekdayStartTime = formData.get("weekdayStartTime");
   const weekdayEndTime = formData.get("weekdayEndTime");
   const saturdayStartTime = formData.get("saturdayStartTime");
@@ -103,8 +103,8 @@ export async function addClassRoom(prevState, formData) {
     startTime: saturdayStartTime,
     endTime: saturdayEndTime,
   };
-  console.log(weekdayTimings, saturdayTimings);
-  console.log(cookieString);
+  // console.log(weekdayTimings, saturdayTimings);
+  // console.log(cookieString);
   const errors = {
     name: !name ? "Name is required" : null,
   };
@@ -118,7 +118,7 @@ export async function addClassRoom(prevState, formData) {
   };
 
   try {
-    console.log("befor axios");
+    // console.log("befor axios");
     const response = await axiosInstance.post(
       "/api/principal/classrooms",
       data,
@@ -128,7 +128,7 @@ export async function addClassRoom(prevState, formData) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     revalidatePath("/dashboard/classrooms");
     return {
       success: true,
@@ -137,7 +137,7 @@ export async function addClassRoom(prevState, formData) {
       resetKey: Date.now(),
     };
   } catch (error) {
-    console.log("hi");
+    // console.log("hi");
     if (isAxiosError(error)) {
       console.error(error.response?.data?.message);
     } else {
@@ -153,12 +153,12 @@ export async function addClassRoom(prevState, formData) {
 }
 
 export async function registerTeacher(prevState, formData) {
-  console.log("hi");
+  // console.log("hi");
   const email = formData.get("email");
   const password = formData.get("password");
   const firstName = formData.get("firstName");
   const lastName = formData.get("lastName");
-  console.log(email, password, firstName, "hereee");
+  // console.log(email, password, firstName, "hereee");
   const bodyObject = {
     email,
     password,
@@ -166,7 +166,7 @@ export async function registerTeacher(prevState, formData) {
     role: "Teacher",
     lastName,
   };
-  console.log(bodyObject, "DATAAAA");
+  // console.log(bodyObject, "DATAAAA");
   const errors = {
     email: !email ? "Username or email is required" : null,
     password:
@@ -182,7 +182,7 @@ export async function registerTeacher(prevState, formData) {
   }
 
   try {
-    console.log("befor axios");
+    // console.log("befor axios");
     const response = await axiosInstance.post(
       "/api/principal/teachers",
       bodyObject,
@@ -192,7 +192,7 @@ export async function registerTeacher(prevState, formData) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     revalidatePath("/dashboard/teachers");
     return {
       success: true,
@@ -201,7 +201,7 @@ export async function registerTeacher(prevState, formData) {
       resetKey: Date.now(),
     };
   } catch (error) {
-    console.log("hi");
+    // console.log("hi");
     if (isAxiosError(error)) {
       console.error(error.response?.data?.message);
     } else {
@@ -216,12 +216,12 @@ export async function registerTeacher(prevState, formData) {
   }
 }
 export async function registerStudent(prevState, formData) {
-  console.log("hi");
+  // console.log("hi");
   const email = formData.get("email");
   const password = formData.get("password");
   const firstName = formData.get("firstName");
   const lastName = formData.get("lastName");
-  console.log(email, password, firstName, "hereee");
+  // console.log(email, password, firstName, "hereee");
   const bodyObject = {
     email,
     password,
@@ -229,7 +229,7 @@ export async function registerStudent(prevState, formData) {
     role: "Student",
     lastName,
   };
-  console.log(bodyObject, "DATAAAA");
+  // console.log(bodyObject, "DATAAAA");
   const errors = {
     email: !email ? "Username or email is required" : null,
     password:
@@ -245,7 +245,7 @@ export async function registerStudent(prevState, formData) {
   }
 
   try {
-    console.log("befor axios");
+    // console.log("befor axios");
     const response = await axiosInstance.post(
       "/api/principal/students",
       bodyObject,
@@ -255,7 +255,7 @@ export async function registerStudent(prevState, formData) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     revalidatePath("/dashboard/students");
     return {
       success: true,
@@ -264,7 +264,7 @@ export async function registerStudent(prevState, formData) {
       resetKey: Date.now(),
     };
   } catch (error) {
-    console.log("hi");
+    // console.log("hi");
     if (isAxiosError(error)) {
       console.error(error.response?.data?.message);
     } else {
@@ -279,7 +279,7 @@ export async function registerStudent(prevState, formData) {
   }
 }
 export async function assignTeacherAction(prevState, formData) {
-  console.log("hiii", Date.now());
+  // console.log("hiii", Date.now());
   const teacherId = formData.get("teacherId");
   const classroomId = formData.get("classroomId");
 
@@ -297,7 +297,7 @@ export async function assignTeacherAction(prevState, formData) {
   };
 
   try {
-    console.log("befor axios");
+    // console.log("befor axios");
     const response = await axiosInstance.post(
       "/api/principal/assign-teacher",
       data,
@@ -307,7 +307,7 @@ export async function assignTeacherAction(prevState, formData) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     revalidatePath("/dashboard/teachers");
     revalidatePath("/dashboard/classrooms");
     revalidatePath("/dashboard/students");
@@ -319,7 +319,7 @@ export async function assignTeacherAction(prevState, formData) {
       resetKey: Date.now(),
     };
   } catch (error) {
-    console.log("hi");
+    // console.log("hi");
     if (isAxiosError(error)) {
       console.error(error.response?.data?.message);
     } else {
@@ -335,7 +335,7 @@ export async function assignTeacherAction(prevState, formData) {
 }
 
 export async function assignStudentAction(prevState, formData) {
-  console.log("hiii", Date.now());
+  // console.log("hiii", Date.now());
   const teacherId = formData.get("teacherId");
   const studentId = formData.get("studentId");
 
@@ -352,7 +352,7 @@ export async function assignStudentAction(prevState, formData) {
   };
 
   try {
-    console.log("befor axios");
+    // console.log("befor axios");
     const response = await axiosInstance.post(
       "/api/principal/assign-student",
       data,
@@ -362,7 +362,7 @@ export async function assignStudentAction(prevState, formData) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     revalidatePath("/dashboard/teachers");
     revalidatePath("/dashboard/classrooms");
     revalidatePath("/dashboard/students");
@@ -374,7 +374,7 @@ export async function assignStudentAction(prevState, formData) {
       resetKey: Date.now(),
     };
   } catch (error) {
-    console.log("hi");
+    // console.log("hi");
     if (isAxiosError(error)) {
       console.error(error.response?.data?.message);
     } else {
@@ -389,7 +389,7 @@ export async function assignStudentAction(prevState, formData) {
   }
 }
 export async function createTimeTableAction(prevState, formData) {
-  console.log("hiii", Date.now());
+  // console.log("hiii", Date.now());
   const subject1 = formData.get("monday_period_1");
   const subject2 = formData.get("monday_period_2");
   const subject3 = formData.get("monday_period_3");
@@ -424,7 +424,7 @@ export async function createTimeTableAction(prevState, formData) {
   const subject32 = formData.get("saturday_period_2");
   const subject33 = formData.get("saturday_period_3");
   const subject34 = formData.get("saturday_period_4");
-  console.log(subject1);
+  // console.log(subject1);
 
   const errors = {
     subject1: subject1 === "Select subject" ? "Select Teacher" : null,
@@ -538,13 +538,13 @@ export async function createTimeTableAction(prevState, formData) {
   };
 
   try {
-    console.log("befor axios");
+    // console.log("befor axios");
     const response = await axiosInstance.post("/api/teacher/timetable", data, {
       headers: {
         Cookie: cookieString,
       },
     });
-    console.log(response);
+    // console.log(response);
     revalidatePath("/teacher");
     // revalidatePath("/dashboard/classrooms");
     // revalidatePath("/dashboard/students");
@@ -556,7 +556,7 @@ export async function createTimeTableAction(prevState, formData) {
       resetKey: Date.now(),
     };
   } catch (error) {
-    console.log("hi");
+    // console.log("hi");
     if (isAxiosError(error)) {
       console.error(error.response?.data?.message);
     } else {
@@ -581,7 +581,7 @@ export async function deleteClass(id) {
         },
       }
     );
-    console.log(response.data.message);
+    // console.log(response.data.message);
     revalidatePath("/dashboard");
     revalidatePath("/dashboard/classrooms");
     revalidatePath("/dashboard/teachers");
@@ -592,9 +592,9 @@ export async function deleteClass(id) {
     };
   } catch (error) {
     if (isAxiosError(error)) {
-      console.log(error.response?.data?.message);
+      // console.log(error.response?.data?.message);
     } else {
-      console.log(error);
+      // console.log(error);
     }
     return {
       success: false,
@@ -613,7 +613,7 @@ export async function deleteStudentPrincipal(id) {
         },
       }
     );
-    console.log(response.data.message);
+    // console.log(response.data.message);
     revalidatePath("/dashboard");
     revalidatePath("/dashboard/classrooms");
     revalidatePath("/dashboard/teachers");
@@ -624,9 +624,9 @@ export async function deleteStudentPrincipal(id) {
     };
   } catch (error) {
     if (isAxiosError(error)) {
-      console.log(error.response?.data?.message);
+      // console.log(error.response?.data?.message);
     } else {
-      console.log(error);
+      // console.log(error);
     }
     return {
       success: false,
@@ -636,7 +636,7 @@ export async function deleteStudentPrincipal(id) {
 }
 
 export async function deleteStudentTeacher(id) {
-  console.log("hiiiii");
+  // console.log("hiiiii");
   try {
     const response = await axiosInstance.delete(
       `/api/teacher/delete-student/${id}`,
@@ -646,7 +646,7 @@ export async function deleteStudentTeacher(id) {
         },
       }
     );
-    console.log(response.data.message);
+    // console.log(response.data.message);
     revalidatePath("/teacher");
 
     return {
@@ -655,9 +655,9 @@ export async function deleteStudentTeacher(id) {
     };
   } catch (error) {
     if (isAxiosError(error)) {
-      console.log(error.response?.data?.message);
+      // console.log(error.response?.data?.message);
     } else {
-      console.log(error);
+      // console.log(error);
     }
     return {
       success: false,
@@ -667,7 +667,7 @@ export async function deleteStudentTeacher(id) {
 }
 
 export async function modifyTimetable(prevState, formData) {
-  console.log("hiii", Date.now());
+  // console.log("hiii", Date.now());
   const subject1 = formData?.get("monday_period_1");
   const subject2 = formData?.get("monday_period_2");
   const subject3 = formData?.get("monday_period_3");
@@ -702,7 +702,7 @@ export async function modifyTimetable(prevState, formData) {
   const subject32 = formData?.get("saturday_period_2");
   const subject33 = formData?.get("saturday_period_3");
   const subject34 = formData?.get("saturday_period_4");
-  console.log(subject1);
+  // console.log(subject1);
 
   const errors = {
     subject1: subject1 === "Select subject" ? "Select Teacher" : null,
@@ -814,16 +814,16 @@ export async function modifyTimetable(prevState, formData) {
       ],
     },
   };
-  console.log("dataaaaaa", data, "dataaaaaa");
+  // console.log("dataaaaaa", data, "dataaaaaa");
 
   try {
-    console.log("befor axios");
+    // console.log("befor axios");
     const response = await axiosInstance.put("/api/teacher/timetable", data, {
       headers: {
         Cookie: cookieString,
       },
     });
-    console.log(response);
+    // console.log(response);
     revalidatePath("/teacher");
     // revalidatePath("/dashboard/classrooms");
     // revalidatePath("/dashboard/students");
@@ -835,7 +835,7 @@ export async function modifyTimetable(prevState, formData) {
       resetKey: Date.now(),
     };
   } catch (error) {
-    console.log("hi");
+    // console.log("hi");
     if (isAxiosError(error)) {
       console.error(error.response?.data?.message);
     } else {
@@ -860,7 +860,7 @@ export async function deleteTimetableAction(id) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     revalidatePath("/teacher");
     return {
       success: true,
@@ -871,6 +871,154 @@ export async function deleteTimetableAction(id) {
     return {
       success: false,
       message: "Failed to delete timetable :(",
+    };
+  }
+}
+
+export async function deleteTeacher(id) {
+  try {
+    const response = await axiosInstance.delete(
+      `/api/principal/teachers/${id}`,
+      {
+        headers: {
+          Cookie: cookieString,
+        },
+      }
+    );
+    // console.log(response);
+    revalidatePath("/dashboard/teachers");
+    revalidatePath("/dashboard/students");
+
+    revalidatePath("/dashboard/classrooms");
+    revalidatePath("/dashboard/");
+
+    return {
+      success: true,
+      message: response.data?.message,
+    };
+  } catch (error) {
+    console.error(error.response?.data?.message);
+    return {
+      success: false,
+      message: "Failed to delete teacher :(",
+    };
+  }
+}
+export async function getTeacherById(id) {
+  try {
+    const response = await axiosInstance.get(`/api/principal/teachers/${id}`, {
+      headers: {
+        Cookie: cookieString,
+      },
+    });
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
+    console.error(error.response?.data?.message);
+    return {
+      success: false,
+      message: "Failed to fetching teacher :(",
+    };
+  }
+}
+
+export async function updateTeacherAction(prevState, formData) {
+  const id = formData.get("teacherId");
+  const email = formData.get("email");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
+  const password = formData.get("password");
+  // console.log(id, email, firstName, lastName, password);
+  const data = {
+    email,
+    firstName,
+    lastName,
+    password,
+  };
+  try {
+    const response = await axiosInstance.put(
+      `/api/principal/teachers/${id}`,
+      data,
+      {
+        headers: {
+          Cookie: cookieString,
+        },
+      }
+    );
+    // console.log(response.data);
+    revalidatePath("/dashboard/teachers");
+    revalidatePath("/dashboard/students");
+    return {
+      success: true,
+      message: response.data?.message,
+    };
+  } catch (error) {
+    console.error(error.response?.data?.message);
+    return {
+      success: false,
+      message: "Failed to update teacher :(",
+    };
+  }
+}
+
+export async function getStudentById(id) {
+  try {
+    const response = await axiosInstance.get(`/api/teacher/students/${id}`, {
+      headers: {
+        Cookie: cookieString,
+      },
+    });
+    // console.log(response.data);
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
+    console.error(error.response?.data?.message);
+    return {
+      success: false,
+      message: "Failed to fetching student :(",
+    };
+  }
+}
+
+export async function updateStudentAction(prevState, formData) {
+  const id = formData.get("studentId");
+  const email = formData.get("email");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
+  const password = formData.get("password");
+  // console.log(id, email, firstName, lastName, password);
+  const data = {
+    email,
+    firstName,
+    lastName,
+    password,
+  };
+  try {
+    const response = await axiosInstance.put(
+      `/api/teacher/students/${id}`,
+      data,
+      {
+        headers: {
+          Cookie: cookieString,
+        },
+      }
+    );
+    // console.log(response.data);
+    revalidatePath("/dashboard/students");
+    revalidatePath("/dashboard/students");
+    return {
+      success: true,
+      message: response.data?.message,
+    };
+  } catch (error) {
+    console.error(error.response?.data?.message);
+    return {
+      success: false,
+      message: "Failed to update student :(",
     };
   }
 }

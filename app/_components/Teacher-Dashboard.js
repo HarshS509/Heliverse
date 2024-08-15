@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 
 const TeacherDashboard = ({ teacherInfo }) => {
   const timetable = teacherInfo?.classroom?.timetable?.schedule;
-  console.log(teacherInfo?.classroom?.timetable?._id, "timeeeee");
+  // console.log(teacherInfo?.classroom?.timetable?._id, "timeeeee");
 
   const InfoCard = ({ icon: Icon, title, value }) => (
     <div className="bg-white p-4 rounded-lg shadow flex items-center">
@@ -31,7 +31,7 @@ const TeacherDashboard = ({ teacherInfo }) => {
   );
 
   const handleEditStudent = (studentId) => {
-    console.log("Edit student:", studentId);
+    // console.log("Edit student:", studentId);
   };
 
   const handleDeleteStudent = async (studentId) => {
@@ -41,11 +41,11 @@ const TeacherDashboard = ({ teacherInfo }) => {
     } else {
       toast.error("Failed to delete student");
     }
-    console.log("Delete student:", studentId);
+    // console.log("Delete student:", studentId);
   };
 
   const handleCreateTimetable = () => {
-    console.log("Create new timetable");
+    // console.log("Create new timetable");
   };
 
   const handleModifyTimetable = async () => {
@@ -124,13 +124,13 @@ const TeacherDashboard = ({ teacherInfo }) => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500">{student.email}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      onClick={() => handleEditStudent(student.id)}
+                  <td className="px-6 py-4 flex whitespace-nowrap text-sm font-medium">
+                    <Link
+                      href={`teacher/modify-student/${student._id}`}
                       className="text-indigo-600 hover:text-indigo-900 mr-4"
                     >
                       <PencilIcon className="w-5 h-5" />
-                    </button>
+                    </Link>
                     <button
                       onClick={() => handleDeleteStudent(student._id)}
                       className="text-red-600 hover:text-red-900"

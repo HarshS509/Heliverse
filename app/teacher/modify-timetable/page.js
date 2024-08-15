@@ -19,7 +19,7 @@ async function Page() {
   );
   const timetableId = res.data.data.teacher.classroom.timetable._id;
   const data = res.data.data.teacher.classroom.timetable.schedule;
-  console.log("teacher", data);
+  // console.log("teacher", data);
   return (
     <>
       <TimetableEditForm existingTimetable={data} timetableId={timetableId} />

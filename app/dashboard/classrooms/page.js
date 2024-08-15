@@ -9,7 +9,7 @@ const Classrooms = async () => {
     .getAll()
     .map((cookie) => `${cookie.name}=${cookie.value}`)
     .join("; ");
-  console.log(cookieString);
+  // console.log(cookieString);
   const res = await axiosInstance.get(
     "/api/principal/classrooms",
 
@@ -20,7 +20,7 @@ const Classrooms = async () => {
     }
   );
   const data = res.data;
-  console.log(data, "array chaiye");
+  // console.log(data, "array chaiye");
   return (
     <div className="flex-grow w-full p-4 bg-white border border-gray-300 rounded-lg shadow-lg">
       <div className="flex justify-between items-center my-5">

@@ -27,7 +27,7 @@ const Page = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Implement API call to add classroom
-    console.log("Adding classroom:", formData);
+    // console.log("Adding classroom:", formData);
   };
 
   return (

@@ -29,7 +29,7 @@ async function Page() {
   );
   const dataClassrooms = res_classrooms.data.data?.classrooms;
   const dataTeachers = res_teachers.data.data?.teachers;
-  console.log(dataClassrooms, dataTeachers);
+  // console.log(dataClassrooms, dataTeachers);
   return (
     <>
       <AssignTeacherForm classrooms={dataClassrooms} teachers={dataTeachers} />

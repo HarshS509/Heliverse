@@ -21,7 +21,7 @@ const Page = async () => {
     }
   );
   const data = res.data.data.students;
-  console.log(data, "array chaiye");
+  // console.log(data, "array chaiye");
   return (
     <div className=" w-full mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow-lg">
       <div className="flex justify-between items-center my-5">
