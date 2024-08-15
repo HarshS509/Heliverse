@@ -11,7 +11,7 @@ const cookieString = cookieStore
   .map((cookie) => `${cookie.name}=${cookie.value}`)
   .join("; ");
 export async function loginUser(prevState, formData) {
-  const uri = process.env(NEXT_PUBLIC_BACKEND_URL);
+  const uri = "http://13.49.35.186";
   console.log("hi");
   const email = formData.get("email");
   const password = formData.get("password");
