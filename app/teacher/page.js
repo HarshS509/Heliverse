@@ -18,7 +18,7 @@ async function page() {
     }
   );
   const data = res.data.data.teacher;
-  console.log("hi", res.data.data.teacher);
+  // console.log("hi", res.data.data.teacher);
   return (
     <>
       <TeacherDashboard teacherInfo={data} />

@@ -6,10 +6,11 @@ import userState from "../_utils/user-state";
 import { toast } from "react-toastify";
 import { setCookie } from "cookies-next";
 import { useEffect } from "react";
+
 export default function Page() {
   const initialState = {
     errors: {
-      userNameOrEmail: null,
+      email: null,
       password: null,
       role: null,
     },
@@ -18,117 +19,139 @@ export default function Page() {
     message: null,
     resetKey: Date.now(),
   };
+
   const router = useRouter();
   const [state, action] = useFormState(loginUser, initialState);
   const { pending } = useFormStatus();
 
-  useEffect(
-    function () {
-      if (state.success) {
-        // console.log("reached toast success");
-        toast.success(state.message);
-        const userId = state.data?.data?.user?._id;
-        const userRole = state.data?.data?.user?.role;
-        const accessToken = state.data?.data?.accessToken;
-        console.log(accessToken);
-        userState.setUser({ _id: userId, role: userRole });
-        setCookie("accessToken", accessToken, {
-          maxAge: "1200000",
-        });
-        if (userRole === "Principal") {
-          router.push("/dashboard");
-        } else if (userRole === "Teacher") {
-          router.push("/teacher");
-        } else if (userRole === "Student") {
-          router.push("/student");
-        }
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.message);
+      const userId = state.data?.data?.user?._id;
+      const userRole = state.data?.data?.user?.role;
+      const accessToken = state.data?.data?.accessToken;
 
-        // setTimeout(() => {
-        //   window.location.href = "/";
-        // }, 500);
+      userState.setUser({ _id: userId, role: userRole });
+      setCookie("accessToken", accessToken, { maxAge: 1200000 });
+      setCookie("role", userRole, { maxAge: 1200000 });
+
+      switch (userRole) {
+        case "Principal":
+          router.push("/dashboard");
+          break;
+        case "Teacher":
+          router.push("/teacher");
+          break;
+        case "Student":
+          router.push("/student");
+          break;
+        default:
+          router.push("/");
       }
-      if (state.success === false) {
-        toast.error(state.message);
-      }
-    },
-    [state]
-  );
+    }
+
+    if (state.success === false) {
+      toast.error(state.message);
+    }
+  }, [state, router]);
 
   return (
     <form action={action}>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
-          <div className="flex flex-col justify-center p-8 md:p-14">
-            <span className="mb-3 text-4xl font-bold text-black">
-              Welcome back
-            </span>
-            <span className="font-light text-gray-400 mb-8">
-              Please enter your details.
-            </span>
-            <div className="mb-2">
-              <span className="mb-2 text-md text-black">Email</span>
-              <input
-                type="text"
-                // className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                className="w-full rounded-lg border border-gray-300 bg-zinc-100 p-3 font-normal placeholder:text-sm "
-                name="email"
-                id="email"
-              />
-              {state.errors?.email && (
-                <p className="p-3  text-xs text-red-500">{`${state.errors.email}`}</p>
-              )}
-            </div>
-            <div className="mb-2">
-              <span className="mb-2 text-md">Password</span>
-              <input
-                type="password"
-                name="password"
-                id="pass"
-                // className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500 text-black"
-                className="w-full rounded-lg border border-gray-300 bg-zinc-100 p-3 font-normal placeholder:text-sm "
-              />
-              {state?.errors?.password && (
-                <p className="p-3 text-xs text-red-500">{`${state.errors.password}`}</p>
-              )}
+        <div className="relative flex flex-col md:flex-row space-y-8 md:space-y-0 bg-white shadow-xl rounded-lg overflow-hidden max-w-4xl w-full">
+          <div className="flex flex-col justify-center p-8 md:p-12 space-y-6 w-full md:w-1/2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+              Welcome Back
+            </h1>
+            <p className="text-gray-600">
+              Please enter your details to sign in.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+                {state.errors?.email && (
+                  <p className="text-sm text-red-500">{state.errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+                {state.errors?.password && (
+                  <p className="text-sm text-red-500">
+                    {state.errors.password}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="role"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  Role
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select a Role</option>
+                  <option value="Principal">Principal</option>
+                  <option value="Teacher">Teacher</option>
+                  <option value="Student">Student</option>
+                </select>
+                {state.errors?.role && (
+                  <p className="text-sm text-red-500">{state.errors.role}</p>
+                )}
+              </div>
             </div>
 
-            <div className="mb-2">
-              <label className="mb-2 text-md" for="role">
-                Role
-              </label>
-              <select
-                id="role"
-                name="role"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              >
-                <option selected>Select a Role</option>
-                <option value="Principal">Principal</option>
-                <option value="Teacher">Teacher</option>
-                <option value="Student">Student</option>
-              </select>
-              {state.errors?.role && (
-                <p className="p-3 text-xs text-red-500">{`${state.errors.role}`}</p>
-              )}
-            </div>
-
-            <button className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:outline hover:outline-gray-300">
-              Sign in
+            <button
+              type="submit"
+              disabled={pending}
+              className="w-full bg-black text-white p-3 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+            >
+              {pending ? "Signing in..." : "Sign in"}
             </button>
           </div>
-          <div className="relative">
+
+          <div className="hidden md:block relative w-full md:w-1/2">
             <img
               src="/vertical.jpg"
-              alt="img"
-              className="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"
+              alt="MySchool Academy"
+              className="w-full h-full object-cover rounded-l-lg"
             />
-
-            <div className="absolute hidden bottom-10 right-6 p-6 bg-white bg-opacity-30 backdrop-blur-sm rounded drop-shadow-lg md:block">
-              <span className="text-white text-xl">
-                &quote;We&apos;ve been uesing Untitle to kick
-                <br />
-                start every new project and can&apos;t <br />
-                imagine working without it.&quote;
-              </span>
+            <div className="absolute bottom-6 right-6 p-6 bg-white bg-opacity-60 rounded-lg shadow-lg">
+              <blockquote className="text-black-800 font-semibold">
+                &quot;Unlock your potential with MySchool Academy, where every
+                login is a step toward a brighter, more empowered future.&quot;
+              </blockquote>
             </div>
           </div>
         </div>

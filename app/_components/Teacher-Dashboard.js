@@ -1,36 +1,24 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   UserCircleIcon,
   AcademicCapIcon,
   ClockIcon,
   PencilIcon,
   TrashIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import {
+  deleteStudentTeacher,
+  deleteTimetableAction,
+  modifyTimetable,
+} from "../_lib/action";
+import { toast } from "react-toastify";
 
 const TeacherDashboard = ({ teacherInfo }) => {
-  const [students, setStudents] = useState([]);
-  // const [timetable, setTimetable] = useState([]);
   const timetable = teacherInfo?.classroom?.timetable?.schedule;
-
-  useEffect(() => {
-    // This would be where you fetch the data if you had an API
-    // Here we're using static data for the purpose of this example
-    // const fetchTeacherData = async () => {
-    //   const infoResponse = await fetch("/api/teacher/info");
-    //   const infoData = await infoResponse.json();
-    //   setTeacherInfo(infoData);
-    //   const studentsResponse = await fetch("/api/teacher/students");
-    //   const studentsData = await studentsResponse.json();
-    //   setStudents(studentsData);
-    //   const timetableResponse = await fetch("/api/teacher/timetable");
-    //   const timetableData = await timetableResponse.json();
-    //   setTimetable(timetableData);
-    // };
-    // fetchTeacherData();
-    // For now, assuming teacherInfo and timetable are directly passed as props
-  }, []);
+  console.log(teacherInfo?.classroom?.timetable?._id, "timeeeee");
 
   const InfoCard = ({ icon: Icon, title, value }) => (
     <div className="bg-white p-4 rounded-lg shadow flex items-center">
@@ -43,18 +31,41 @@ const TeacherDashboard = ({ teacherInfo }) => {
   );
 
   const handleEditStudent = (studentId) => {
-    // Implement edit student functionality
     console.log("Edit student:", studentId);
   };
 
-  const handleDeleteStudent = (studentId) => {
-    // Implement delete student functionality
+  const handleDeleteStudent = async (studentId) => {
+    const response = await deleteStudentTeacher(studentId);
+    if (response.success) {
+      toast.success("Student deleted successfully");
+    } else {
+      toast.error("Failed to delete student");
+    }
     console.log("Delete student:", studentId);
   };
 
-  const handleAddPeriod = () => {
-    // Implement add period functionality
-    console.log("Add new period");
+  const handleCreateTimetable = () => {
+    console.log("Create new timetable");
+  };
+
+  const handleModifyTimetable = async () => {
+    const response = await modifyTimetable(teacherInfo.classroom.timetable._id);
+    if (response.success) {
+      toast.success("Timetable modified successfully");
+    } else {
+      toast.error("Failed to modify timetable");
+    }
+  };
+
+  const handleDeleteTimetable = async () => {
+    const response = await deleteTimetableAction(
+      teacherInfo.classroom.timetable._id
+    );
+    if (response.success) {
+      toast.success("Timetable deleted successfully");
+    } else {
+      toast.error("Failed to delete timetable");
+    }
   };
 
   return (
@@ -121,7 +132,7 @@ const TeacherDashboard = ({ teacherInfo }) => {
                       <PencilIcon className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => handleDeleteStudent(student.id)}
+                      onClick={() => handleDeleteStudent(student._id)}
                       className="text-red-600 hover:text-red-900"
                     >
                       <TrashIcon className="w-5 h-5" />
@@ -138,76 +149,99 @@ const TeacherDashboard = ({ teacherInfo }) => {
       <div>
         <h2 className="text-2xl font-semibold mb-4">Timetable Management</h2>
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Time
-                </th>
-                {[
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ].map((day) => (
-                  <th
-                    key={day}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    {day}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {[
-                "12:00 - 13:00",
-                "13:00 - 14:00",
-                "14:00 - 15:00",
-                "15:00 - 16:00",
-                "16:00 - 17:00",
-                "17:00 - 18:00",
-              ].map((timeSlot, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {timeSlot}
-                  </td>
-                  {[
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                  ].map((day) => {
-                    const period = timetable
-                      .find((daySchedule) => daySchedule.day === day)
-                      ?.periods.find(
-                        (p) => p.startTime === timeSlot.split(" - ")[0]
-                      );
-                    return (
-                      <td
+          {timetable ? (
+            <>
+              <table className="min-w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Time
+                    </th>
+                    {[
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday",
+                    ].map((day) => (
+                      <th
                         key={day}
-                        className="px-6 py-4 whitespace-nowrap text-sm"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        {period ? period.subject : "-"}
+                        {day}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {[
+                    "12:00 - 13:00",
+                    "13:00 - 14:00",
+                    "14:00 - 15:00",
+                    "15:00 - 16:00",
+                    "16:00 - 17:00",
+                    "17:00 - 18:00",
+                  ].map((timeSlot, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {timeSlot}
                       </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      {[
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                      ].map((day) => {
+                        const period = timetable
+                          .find((daySchedule) => daySchedule.day === day)
+                          ?.periods.find(
+                            (p) => p.startTime === timeSlot.split(" - ")[0]
+                          );
+                        return (
+                          <td
+                            key={day}
+                            className="px-6 py-4 whitespace-nowrap text-sm"
+                          >
+                            {period ? period.subject : "-"}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="mt-4 flex gap-4">
+                <Link
+                  href={`/teacher/modify-timetable`}
+                  onClick={handleModifyTimetable}
+                  className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+                >
+                  Modify Timetable
+                </Link>
+                <button
+                  onClick={handleDeleteTimetable}
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                >
+                  Delete Timetable
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="bg-white p-4 rounded-lg shadow">
+              <p className="text-gray-500">No timetable available.</p>
+              <Link
+                href={"/teacher/create-timetable"}
+                onClick={handleCreateTimetable}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors inline-block"
+              >
+                Create Timetable
+              </Link>
+            </div>
+          )}
         </div>
-        <Link
-          href={"/teacher/create-timetable"}
-          onClick={handleAddPeriod}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-        >
-          Create Timetable
-        </Link>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 "use client";
-
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import {
   UserCircleIcon,
@@ -10,8 +10,17 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
+// import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ role }) => {
+  // const cookieStore = cookies();
+  // const role = cookieStore.get("role");
+  console.log(role.value, "roleee");
+  // const cookieString = cookieStore
+  //   .getAll()
+  //   .map((cookie) => `${cookie.name}=${cookie.value}`)
+  //   .join("; ");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const router = useRouter();
@@ -30,7 +39,17 @@ const AdminSidebar = () => {
       </Link>
     );
   };
-
+  const handleClick = () => {
+    if (role.value === "Principal") {
+      router.push("/dashboard");
+    } else if (role.value === "Teacher") {
+      router.push("/teacher");
+    } else if (role.value === "Student") {
+      router.push("/student");
+    } else {
+      router.push("/"); // Default path if no role matches
+    }
+  };
   return (
     <>
       <button
@@ -56,7 +75,7 @@ const AdminSidebar = () => {
         </button>
         <div className="border-b border-[#D9D9D9] bg-light  px-6 py-3 dark:border-gray-700 dark:bg-dark sm:p-6 ">
           <h1
-            onClick={() => router.push("/")}
+            onClick={handleClick}
             className="cursor-pointer text-xl font-medium text-light-title dark:text-dark-title"
           >
             MySchool

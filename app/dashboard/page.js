@@ -1,5 +1,3 @@
-"use client";
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   UserCircleIcon,
@@ -7,13 +5,48 @@ import {
   UsersIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
+import { cookies } from "next/headers";
+import axiosInstance from "../_utils/axiosInstance";
 
-const PrincipalDashboard = () => {
-  const [stats, setStats] = useState({
-    totalTeachers: 0,
-    totalStudents: 0,
-    totalClassrooms: 0,
-  });
+const PrincipalDashboard = async () => {
+  const cookieStore = cookies();
+  const cookieString = cookieStore
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; ");
+  const res_classrooms = await axiosInstance.get(
+    "/api/principal/classrooms",
+
+    {
+      headers: {
+        Cookie: cookieString,
+      },
+    }
+  );
+  const res_teachers = await axiosInstance.get(
+    "/api/principal/teachers",
+
+    {
+      headers: {
+        Cookie: cookieString,
+      },
+    }
+  );
+  const res_students = await axiosInstance.get(
+    "/api/principal/students",
+
+    {
+      headers: {
+        Cookie: cookieString,
+      },
+    }
+  );
+  const data_students = res_students.data.data.students;
+  const data_classrooms = res_classrooms.data.data.classrooms;
+  const data_teachers = res_teachers.data.data.teachers;
+
+  const stats = 0;
+  // console.log(data_teachers, "array chaiye");
 
   // useEffect(() => {
   //   // Fetch stats from API
@@ -48,7 +81,9 @@ const PrincipalDashboard = () => {
             <UserCircleIcon className="w-10 h-10 text-blue-500 mr-4" />
             <div>
               <p className="text-gray-500">Total Teachers</p>
-              <p className="text-2xl font-bold">{stats.totalTeachers}</p>
+              <p className="text-2xl font-bold">
+                {data_teachers?.length || "00"}
+              </p>
             </div>
           </div>
         </div>
@@ -57,7 +92,9 @@ const PrincipalDashboard = () => {
             <UsersIcon className="w-10 h-10 text-green-500 mr-4" />
             <div>
               <p className="text-gray-500">Total Students</p>
-              <p className="text-2xl font-bold">{stats.totalStudents}</p>
+              <p className="text-2xl font-bold">
+                {data_students?.length || "00"}
+              </p>
             </div>
           </div>
         </div>
@@ -66,7 +103,9 @@ const PrincipalDashboard = () => {
             <AcademicCapIcon className="w-10 h-10 text-purple-500 mr-4" />
             <div>
               <p className="text-gray-500">Total Classrooms</p>
-              <p className="text-2xl font-bold">{stats.totalClassrooms}</p>
+              <p className="text-2xl font-bold">
+                {data_classrooms?.length || "00"}
+              </p>
             </div>
           </div>
         </div>
@@ -87,25 +126,10 @@ const PrincipalDashboard = () => {
             text="Assign Teacher"
           />
           <QuickActionButton
-            href="/manage-users"
+            href="/dashboard/assign-student"
             icon={UsersIcon}
-            text="Manage Users"
+            text="Assign Student"
           />
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4">Recent Activity</h2>
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <ul className="divide-y divide-gray-200">
-            {/* Replace with actual recent activity data */}
-            {[1, 2, 3].map((item) => (
-              <li key={item} className="px-6 py-4 hover:bg-gray-50">
-                <p className="text-sm text-gray-500">Activity {item}</p>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>

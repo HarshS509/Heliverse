@@ -1,113 +1,202 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.js</code>
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div className="container mx-auto px-4">
+          {/* Small screens */}
+          <div className="flex justify-between items-center py-4 sm:hidden">
+            <h1 className="text-2xl font-extrabold tracking-tight">
+              <span className="text-indigo-100">MySchool</span> Academy
+            </h1>
+            <Link
+              href="/login"
+              className="bg-white text-blue-600 px-4 py-2 rounded-full shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+              Login
+            </Link>
+          </div>
+
+          {/* Medium screens */}
+          <div className="hidden sm:flex md:hidden flex-col py-4">
+            <h1 className="text-2xl font-extrabold tracking-tight text-center mb-4">
+              <span className="text-indigo-100">MySchool</span> Academy
+            </h1>
+            <div className="flex justify-between items-center">
+              <nav className="flex space-x-4 text-lg font-medium">
+                <a href="#about" className="hover:text-indigo-200 transition">
+                  About Us
+                </a>
+                <a
+                  href="#programs"
+                  className="hover:text-indigo-200 transition"
+                >
+                  Our Programs
+                </a>
+                <a href="#contact" className="hover:text-indigo-200 transition">
+                  Contact
+                </a>
+              </nav>
+              <Link
+                href="/login"
+                className="bg-white text-blue-600 px-4 py-2 rounded-full shadow-lg hover:bg-gray-100 transition duration-300"
+              >
+                Login
+              </Link>
+            </div>
+          </div>
+
+          {/* Large screens */}
+          <div className="hidden md:flex justify-between items-center py-4">
+            <h1 className="text-3xl font-extrabold tracking-tight">
+              <span className="text-indigo-100">MySchool</span> Academy
+            </h1>
+            <div className="flex items-center">
+              <nav className="flex space-x-6 text-lg font-medium mr-8">
+                <a href="#about" className="hover:text-indigo-200 transition">
+                  About Us
+                </a>
+                <a
+                  href="#programs"
+                  className="hover:text-indigo-200 transition"
+                >
+                  Our Programs
+                </a>
+                <a href="#contact" className="hover:text-indigo-200 transition">
+                  Contact
+                </a>
+              </nav>
+              <Link
+                href="/login"
+                className="bg-white text-blue-600 px-4 py-2 rounded-full shadow-lg hover:bg-gray-100 transition duration-300"
+              >
+                Login
+              </Link>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section
+        className="text-center py-16 bg-cover bg-no-repeat"
+        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+      >
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900">
+          Welcome to <span className="text-blue-600">MySchool Academy</span>
+        </h2>
+        <p className="text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto">
+          Empowering Minds, Shaping Futures
         </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+      </section>
+
+      {/* About Us Section */}
+      <section id="about" className="py-16">
+        <div className="container mx-auto px-4 md:px-10">
+          <h3 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 text-center">
+            Our Story
+          </h3>
+          <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto text-center">
+            At MySchool Academy, we believe that every child deserves a
+            world-class education. Our dedicated team of educators is committed
+            to providing a nurturing environment where students can thrive
+            academically, socially, and emotionally.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
+            <div className="bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+              <h4 className="text-2xl font-semibold mb-3 text-blue-600">
+                Our Mission
+              </h4>
+              <p className="text-gray-600">
+                To provide a comprehensive education that prepares students for
+                success in an ever-changing world.
+              </p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+              <h4 className="text-2xl font-semibold mb-3 text-blue-600">
+                Our Vision
+              </h4>
+              <p className="text-gray-600">
+                To be a leading educational institution that fosters a culture
+                of excellence, innovation, and inclusivity.
+              </p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+              <h4 className="text-2xl font-semibold mb-3 text-blue-600">
+                Our Values
+              </h4>
+              <p className="text-gray-600">
+                We value academic excellence, creativity, diversity, and
+                community.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Programs Section */}
+      <section id="programs" className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4 md:px-10">
+          <h3 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 text-center">
+            Our Programs
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {["Elementary Education", "Middle School", "High School"].map(
+              (program) => (
+                <div
+                  key={program}
+                  className="bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
+                >
+                  <h4 className="text-2xl font-semibold mb-3 text-blue-600">
+                    {program}
+                  </h4>
+                  <p className="text-gray-600">
+                    Comprehensive curriculum designed to challenge and inspire
+                    students at every level.
+                  </p>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-16 bg-white">
+        <div className="container mx-auto px-4 md:px-10 text-center">
+          <h3 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+            Get in Touch
+          </h3>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            We&apos;re here to answer your questions and help you learn more
+            about MySchool Academy.
+          </p>
           <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:harshsojitra509@gmail.com"
+            className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 md:px-10 py-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
+            Contact Us
           </a>
         </div>
-      </div>
+      </section>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-400 py-6">
+        <div className="container mx-auto text-center">
+          <p>&copy; 2024 MySchool Academy. All rights reserved.</p>
+          <div className="mt-4">
+            <a href="#" className="hover:underline mx-4">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:underline mx-4">
+              Terms of Service
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
